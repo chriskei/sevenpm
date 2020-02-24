@@ -1,10 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
+import { Container } from "@material-ui/core";
+import { Header } from "./components/Header";
+import Basic from "./Basic";
 
 const App = () => {
   return (
-    <div>
-      <h3>hello</h3>
-    </div>
+    <Container style={{ backgroundColor: "purple" }}>
+      <Header />
+      <Basic />
+    </Container>
   );
 };
 
