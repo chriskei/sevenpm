@@ -39,7 +39,7 @@ render() {
             value={this.state.text}
             onChange={this.handleChange}
           />
-          <button type="submit">Okay, show me a talking cow!</button>
+          <button type="submit">Okay, show me a talking cow now!</button>
         </form>
       </div>
     )
