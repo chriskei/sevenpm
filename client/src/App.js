@@ -1,13 +1,18 @@
 import React from "react";
-import { Container } from "@material-ui/core";
+import { Container, Typography } from "@material-ui/core";
 import { Header } from "./components/Header";
-import Basic from "./Basic";
+import { RestaurantForm } from "./components/RestaurantForm";
 
 const App = () => {
   return (
-    <Container style={{ backgroundColor: "purple" }}>
+    <Container style={{ backgroundColor: "indigo" }}>
       <Header />
-      <Basic />
+      <Typography>
+        Please give us some information about what you want to eat! Each field
+        is optional but what you choose to enter will help us match you to a
+        restaurant!
+      </Typography>
+      <RestaurantForm />
     </Container>
   );
 };
