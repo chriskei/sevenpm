@@ -1,11 +1,13 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Button } from "@material-ui/core";
+import { CategoriesButton } from "./CategoriesButton";
 
 const json1 = { addedValue: "1" };
 
 const RestaurantForm = () => (
   <div>
+    <CategoriesButton />
     <h1>add button for categories here</h1>
     <Formik
       initialValues={{

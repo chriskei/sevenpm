@@ -1,5 +1,4 @@
 const express = require("express");
-const cowsay = require("cowsay");
 const cors = require("cors");
 
 const displayCategories = require("./categories/displayCategories");
@@ -7,11 +6,30 @@ const searchCategories = require("./categories/searchCategories");
 
 const displayCategoriesCopy = displayCategories;
 const searchCategoriesCopy = searchCategories;
+const numCategories = displayCategoriesCopy.length;
 
 // Create the server
 const app = express();
 
-let chosenCategorieIndices = [];
+let chosenCategoryIndices = [1, 17];
+
+// Choose new category indices randomly
+app.get("/randomize", cors(), async (req, res, next) => {
+  chosenCategoryIndices = [];
+  for (let i = 0; i < 5; i++) {
+    const randomIndex = Math.random() * numCategories;
+    chosenCategoryIndices.includes(randomIndex)
+      ? i--
+      : chosenCategoryIndices.push(randomIndex);
+  }
+});
+
+// Return chosen category indices
+app.get("/getIndices", cors(), async (req, res, next) => {
+  res.json({ indices: chosenCategoryIndices });
+});
+
+/*
 // Serve our api route /cow that returns a custom talking text cow
 app.get("/api/cow/:say", cors(), async (req, res, next) => {
   try {
@@ -31,6 +49,7 @@ app.get("/api/cow/", cors(), async (req, res, next) => {
     next(err);
   }
 });
+*/
 
 const path = require("path");
 // Serve static files from the React frontend app
