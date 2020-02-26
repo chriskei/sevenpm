@@ -1,4 +1,4 @@
-export const searchCategories = [
+ const searchCategories = [
   "afghani",
   "african",
   "newamerican",

@@ -1,4 +1,4 @@
-export const displayCategories = [
+const displayCategories = [
   "Afghan",
   "African",
   "American (New)",

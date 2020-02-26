@@ -1,9 +1,9 @@
-import express from "express";
-import cowsay from "cowsay";
-import cors from "cors";
+const express = require("express");
+const cowsay = require("cowsay");
+const cors = require("cors");
 
-import displayCategories from "./categories/displayCategories";
-import searchCategories from "./categories/searchCategories";
+const displayCategories = require("./categories/displayCategories");
+const searchCategories = require("./categories/searchCategories");
 
 const displayCategoriesCopy = displayCategories;
 const searchCategoriesCopy = searchCategories;
