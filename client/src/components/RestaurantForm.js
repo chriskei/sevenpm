@@ -1,7 +1,24 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Button } from "@material-ui/core";
 import { CategoriesButton } from "./CategoriesButton";
+
+const formStyles = {
+  color: "white"
+};
+
+const widthStyles = {
+  width: "250px"
+};
+
+const textStyles = {
+  fontSize: "x-large"
+};
+
+const checkboxStyles = {
+  width: "15px",
+  height: "15px"
+};
 
 const json1 = { addedValue: "1" };
 
@@ -28,31 +45,51 @@ const RestaurantForm = () => (
       }}
     >
       {({ isSubmitting }) => (
-        <Form style={{ color: "white" }}>
+        <Form style={formStyles}>
           <div>
             <h1>Location:</h1>
-            <Field type="text" name="location"></Field>
+            <Field type="text" name="location" style={widthStyles}></Field>
           </div>
 
           <div>
             <h1>Radius (miles):</h1>
-            <label for="radius">1</label>
-            <Field type="range" min={1} max={25} name="radius" />
-            <label for="radius">25</label>
+            <label for="radius" style={textStyles}>
+              1
+            </label>
+            <Field
+              type="range"
+              min={1}
+              max={25}
+              name="radius"
+              style={widthStyles}
+            />
+            <label for="radius" style={textStyles}>
+              25
+            </label>
           </div>
 
-          <div>
+          <Fragment style={checkboxStyles}>
             <h1>Price:</h1>
-            <Field type="checkbox" name="cheap" />
-            <label for="cheap">$ </label>
-            <Field type="checkbox" name="average" />
-            <label for="average">$$ </label>
-            <Field type="checkbox" name="nice" />
-            <label for="nice">$$$ </label>
-            <Field type="checkbox" name="fancy" />
-            <label for="fancy">$$$$</label>
-          </div>
+            <Field type="checkbox" name="cheap" style={checkboxStyles} />
+            <label for="cheap" style={textStyles}>
+              ${"  "}
+            </label>
+            <Field type="checkbox" name="average" style={checkboxStyles} />
+            <label for="average" style={textStyles}>
+              $${"  "}
+            </label>
+            <Field type="checkbox" name="nice" style={checkboxStyles} />
+            <label for="nice" style={textStyles}>
+              $$${" "}
+            </label>
+            <Field type="checkbox" name="fancy" style={checkboxStyles} />
+            <label for="fancy" style={textStyles}>
+              $$$$
+            </label>
+          </Fragment>
 
+          <br />
+          <br />
           <br />
 
           <Button
@@ -61,8 +98,11 @@ const RestaurantForm = () => (
             size="large"
             variant="contained"
           >
-            SUBMIT
+            FIND MY RESTAURANTS
           </Button>
+
+          <br />
+          <br />
         </Form>
       )}
     </Formik>

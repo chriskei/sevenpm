@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Button, Typography } from "@material-ui/core";
+import { Button, Chip, Typography } from "@material-ui/core";
 
 const CategoriesButton = () => {
   const [categories, setCategories] = useState([]);
 
   return (
-    <div>
+    <div style={{ color: "white" }}>
       <Button
         size="large"
         variant="contained"
@@ -23,7 +23,7 @@ const CategoriesButton = () => {
       </Button>
       <h1>Categories:</h1>
       {categories.map(category => (
-        <Typography variant="h4">{category}</Typography>
+        <Chip label={category} />
       ))}
     </div>
   );
