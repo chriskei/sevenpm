@@ -1,4 +1,5 @@
-const displayCategories = [
+// Separated display categories from main code for clarity
+module.exports = [
   "Afghan",
   "African",
   "American (New)",

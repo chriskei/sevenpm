@@ -1,27 +1,25 @@
 const express = require("express");
 const cors = require("cors");
-
+const math = require("mathjs");
 const displayCategories = require("./categories/displayCategories");
 const searchCategories = require("./categories/searchCategories");
-
-const displayCategoriesCopy = displayCategories;
-const searchCategoriesCopy = searchCategories;
-const numCategories = displayCategoriesCopy.length;
 
 // Create the server
 const app = express();
 
-let chosenCategoryIndices = [1, 17];
+// Sets up category picking
+const numCategories = displayCategories.length;
+const categoryIndices = [];
+for (let i = 0; i < numCategories; i++) {
+  categoryIndices.push(i);
+}
 
+let chosenCategoryIndices = [];
 // Choose new category indices randomly
-app.get("/randomize", cors(), async (req, res, next) => {
-  chosenCategoryIndices = [];
-  for (let i = 0; i < 5; i++) {
-    const randomIndex = Math.random() * numCategories;
-    chosenCategoryIndices.includes(randomIndex)
-      ? i--
-      : chosenCategoryIndices.push(randomIndex);
-  }
+app.get("/randomize/", cors(), async (req, res, next) => {
+  chosenCategoryIndices = math.pickRandom(categoryIndices, 5);
+  console.log(chosenCategoryIndices);
+  res.sendStatus(200);
 });
 
 // Return chosen category indices

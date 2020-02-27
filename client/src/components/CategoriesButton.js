@@ -11,9 +11,11 @@ const CategoriesButton = () => {
         variant="contained"
         onClick={async () => {
             //await fetch("/getIndices").then(result => (console.log(result.json())));
+            await fetch("/randomize");
             const a = await fetch("/getIndices");
             const b = a.json().then(value => setCategories(value.indices));
             console.log(categories);
+            console.log(b);
           /*
           await fetch("/randomize");
           const response = await fetch("/getIndices");

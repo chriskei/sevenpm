@@ -1,4 +1,5 @@
- const searchCategories = [
+// Separated search categories from main code for clarity
+module.exports = [
   "afghani",
   "african",
   "newamerican",
