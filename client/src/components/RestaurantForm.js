@@ -8,7 +8,6 @@ const json1 = { addedValue: "1" };
 const RestaurantForm = () => (
   <div>
     <CategoriesButton />
-    <h1>add button for categories here</h1>
     <Formik
       initialValues={{
         location: "",

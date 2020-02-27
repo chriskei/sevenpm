@@ -13,18 +13,20 @@ const categoryIndices = [];
 for (let i = 0; i < numCategories; i++) {
   categoryIndices.push(i);
 }
+let chosenCategoryIndices = [0, 1, 2, 3, 4];
 
-let chosenCategoryIndices = [];
 // Choose new category indices randomly
-app.get("/randomize/", cors(), async (req, res, next) => {
+app.get("/randomize", cors(), async (req, res, next) => {
   chosenCategoryIndices = math.pickRandom(categoryIndices, 5);
-  console.log(chosenCategoryIndices);
   res.sendStatus(200);
 });
 
 // Return chosen category indices
-app.get("/getIndices", cors(), async (req, res, next) => {
-  res.json({ indices: chosenCategoryIndices });
+app.get("/getDisplayCategories", cors(), async (req, res, next) => {
+  const chosenDisplayCategories = chosenCategoryIndices.map(index =>
+    displayCategories[index]
+  );
+  res.json({ data: chosenDisplayCategories });
 });
 
 /*
