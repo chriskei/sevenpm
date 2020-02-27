@@ -22,91 +22,98 @@ const checkboxStyles = {
 
 const json1 = { addedValue: "1" };
 
-const RestaurantForm = () => (
-  <div>
-    <CategoriesButton />
-    <Formik
-      initialValues={{
-        location: "",
+const RestaurantForm = props => {
+  const { latitude, longitude } = props;
 
-        radius: 1,
+  return (
+    <div>
+      <h1>hello:
+        {latitude} {longitude}
+      </h1>
+      <CategoriesButton />
+      <Formik
+        initialValues={{
+          location: "",
 
-        cheap: false,
-        average: false,
-        nice: false,
-        fancy: false
-      }}
-      onSubmit={(values, { setSubmitting }) => {
-        for (var key in json1) {
-          values[key] = json1[key];
-        }
-        alert(JSON.stringify(values, null, 2));
-        setSubmitting(false);
-      }}
-    >
-      {({ isSubmitting }) => (
-        <Form style={formStyles}>
-          <div>
-            <h1>Location:</h1>
-            <Field type="text" name="location" style={widthStyles}></Field>
-          </div>
+          radius: 1,
 
-          <div>
-            <h1>Radius (miles):</h1>
-            <label for="radius" style={textStyles}>
-              1
-            </label>
-            <Field
-              type="range"
-              min={1}
-              max={25}
-              name="radius"
-              style={widthStyles}
-            />
-            <label for="radius" style={textStyles}>
-              25
-            </label>
-          </div>
+          cheap: false,
+          average: false,
+          nice: false,
+          fancy: false
+        }}
+        onSubmit={(values, { setSubmitting }) => {
+          for (var key in json1) {
+            values[key] = json1[key];
+          }
+          alert(JSON.stringify(values, null, 2));
+          setSubmitting(false);
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form style={formStyles}>
+            <div>
+              <h1>Location:</h1>
+              <Field type="text" name="location" style={widthStyles}></Field>
+            </div>
 
-          <Fragment style={checkboxStyles}>
-            <h1>Price:</h1>
-            <Field type="checkbox" name="cheap" style={checkboxStyles} />
-            <label for="cheap" style={textStyles}>
-              ${"  "}
-            </label>
-            <Field type="checkbox" name="average" style={checkboxStyles} />
-            <label for="average" style={textStyles}>
-              $${"  "}
-            </label>
-            <Field type="checkbox" name="nice" style={checkboxStyles} />
-            <label for="nice" style={textStyles}>
-              $$${" "}
-            </label>
-            <Field type="checkbox" name="fancy" style={checkboxStyles} />
-            <label for="fancy" style={textStyles}>
-              $$$$
-            </label>
-          </Fragment>
+            <div>
+              <h1>Radius (miles):</h1>
+              <label for="radius" style={textStyles}>
+                1
+              </label>
+              <Field
+                type="range"
+                min={1}
+                max={25}
+                name="radius"
+                style={widthStyles}
+              />
+              <label for="radius" style={textStyles}>
+                25
+              </label>
+            </div>
 
-          <br />
-          <br />
-          <br />
+            <Fragment style={checkboxStyles}>
+              <h1>Price:</h1>
+              <Field type="checkbox" name="cheap" style={checkboxStyles} />
+              <label for="cheap" style={textStyles}>
+                ${"  "}
+              </label>
+              <Field type="checkbox" name="average" style={checkboxStyles} />
+              <label for="average" style={textStyles}>
+                $${"  "}
+              </label>
+              <Field type="checkbox" name="nice" style={checkboxStyles} />
+              <label for="nice" style={textStyles}>
+                $$${" "}
+              </label>
+              <Field type="checkbox" name="fancy" style={checkboxStyles} />
+              <label for="fancy" style={textStyles}>
+                $$$$
+              </label>
+            </Fragment>
 
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            size="large"
-            variant="contained"
-          >
-            FIND MY RESTAURANTS
-          </Button>
+            <br />
+            <br />
+            <br />
 
-          <br />
-          <br />
-        </Form>
-      )}
-    </Formik>
-  </div>
-);
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              size="large"
+              variant="contained"
+            >
+              FIND MY RESTAURANTS
+            </Button>
+
+            <br />
+            <br />
+          </Form>
+        )}
+      </Formik>
+    </div>
+  );
+};
 
 export { RestaurantForm };
