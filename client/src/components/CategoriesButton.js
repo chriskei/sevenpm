@@ -1,8 +1,20 @@
-import React, { useState } from "react";
-import { Button, Chip, Typography } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { Button, Chip } from "@material-ui/core";
 
 const CategoriesButton = () => {
   const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    async function fetchInit() {
+      const displayCategoriesResponse = await fetch(
+      "/getDisplayCategories"
+    );
+    displayCategoriesResponse
+      .json()
+      .then(value => setCategories(value.data));
+    };
+    fetchInit();
+  });
 
   return (
     <div style={{ color: "white" }}>

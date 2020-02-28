@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Button } from "@material-ui/core";
 import { CategoriesButton } from "./CategoriesButton";
+import * as Yup from "yup";
 
 const formStyles = {
   color: "white"
@@ -20,16 +21,11 @@ const checkboxStyles = {
   height: "15px"
 };
 
-const json1 = { addedValue: "1" };
-
 const RestaurantForm = props => {
   const { latitude, longitude } = props;
 
   return (
     <div>
-      <h1>hello:
-        {latitude} {longitude}
-      </h1>
       <CategoriesButton />
       <Formik
         initialValues={{
@@ -42,9 +38,25 @@ const RestaurantForm = props => {
           nice: false,
           fancy: false
         }}
+        validationSchema={
+          !!latitude && !!longitude
+            ? Yup.object()
+            : Yup.object({
+                location: Yup.string()
+                  .min(
+                    1,
+                    "If you disable geolocation, you must enter a location."
+                  )
+                  .required(
+                    "If you disable geolocation, you must enter a location."
+                  )
+              })
+        }
         onSubmit={(values, { setSubmitting }) => {
-          for (var key in json1) {
-            values[key] = json1[key];
+          if (values.location === "") {
+            delete values.location;
+            values["latitude"] = latitude;
+            values["longitude"] = longitude;
           }
           alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
@@ -55,6 +67,8 @@ const RestaurantForm = props => {
             <div>
               <h1>Location:</h1>
               <Field type="text" name="location" style={widthStyles}></Field>
+              <br />
+              <ErrorMessage name="location" />
             </div>
 
             <div>
@@ -74,7 +88,7 @@ const RestaurantForm = props => {
               </label>
             </div>
 
-            <Fragment style={checkboxStyles}>
+            <div>
               <h1>Price:</h1>
               <Field type="checkbox" name="cheap" style={checkboxStyles} />
               <label for="cheap" style={textStyles}>
@@ -92,7 +106,7 @@ const RestaurantForm = props => {
               <label for="fancy" style={textStyles}>
                 $$$$
               </label>
-            </Fragment>
+            </div>
 
             <br />
             <br />

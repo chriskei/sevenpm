@@ -21,12 +21,20 @@ app.get("/randomize", cors(), async (req, res, next) => {
   res.sendStatus(200);
 });
 
-// Return chosen category indices
+// Return chosen category indices for display
 app.get("/getDisplayCategories", cors(), async (req, res, next) => {
   const chosenDisplayCategories = chosenCategoryIndices.map(index =>
     displayCategories[index]
   );
   res.json({ data: chosenDisplayCategories });
+});
+
+// Return chosen category indices for search
+app.get("/getSearchCategories", cors(), async (req, res, next) => {
+  const chosenSearchCategories = chosenCategoryIndices.map(index =>
+    searchCategories[index]
+  );
+  res.json({ data: chosenSearchCategories });
 });
 
 /*

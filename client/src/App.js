@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import { Container, Typography } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { Container } from "@material-ui/core";
 import { Header } from "./components/Header";
 import { RestaurantForm } from "./components/RestaurantForm";
 
 const App = () => {
-  const [latitude, setLatitude] = useState();
-  const [longitude, setLongitude] = useState();
+  const [latitude, setLatitude] = useState(undefined);
+  const [longitude, setLongitude] = useState(undefined);
 
-  navigator.geolocation.getCurrentPosition(pos => {
-    setLatitude(pos.coords.latitude.toFixed(5));
-    setLongitude(pos.coords.longitude.toFixed(5));
-  });
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(pos => {
+      setLatitude(pos.coords.latitude.toFixed(5));
+      setLongitude(pos.coords.longitude.toFixed(5));
+    });
+  }, [latitude, longitude]);
 
   return (
     <Container style={{ backgroundColor: "indigo" }}>
