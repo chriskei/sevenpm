@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Button } from "@material-ui/core";
+import { Button, Chip } from "@material-ui/core";
 import { CategoriesButton } from "./CategoriesButton";
 import * as Yup from "yup";
 
@@ -23,6 +23,7 @@ const checkboxStyles = {
 
 const RestaurantForm = props => {
   const { latitude, longitude } = props;
+  const [restaurants, setRestaurants] = useState([]);
 
   return (
     <div>
@@ -65,9 +66,9 @@ const RestaurantForm = props => {
           const searchRestaurantsResponse = await fetch(
             `/searchRestaurants/${JSON.stringify(values)}`
           );
-          await searchRestaurantsResponse.json().then(value => {
-            console.log(value);
-          });
+          await searchRestaurantsResponse
+            .json()
+            .then(value => setRestaurants(value.data));
           setSubmitting(false);
         }}
       >
@@ -131,6 +132,14 @@ const RestaurantForm = props => {
 
             <br />
             <br />
+
+            {restaurants.map(restaurant => (
+              <Chip label={restaurant} />
+            ))}
+
+            <br />
+            <br />
+            
           </Form>
         )}
       </Formik>

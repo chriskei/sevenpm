@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "",
@@ -16,5 +16,8 @@
     "express": "^4.17.1",
     "mathjs": "^6.6.1",
     "yelp-fusion": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }

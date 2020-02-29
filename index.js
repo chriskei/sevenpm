@@ -50,18 +50,55 @@ app.get("/getSearchCategories", cors(), async (req, res, next) => {
 
 // Return the restaurants found given the form values
 app.get("/searchRestaurants/:values", cors(), async (req, res, next) => {
-  client
-    .search({
-      term: "Four Barrel Coffee",
-      location: "san francisco, ca"
-    })
-    .then(response => {
-      console.log(response.jsonBody.businesses[0].name);
-    })
-    .catch(e => {
-      console.log(e);
-    });
-  res.sendStatus(200);
+  const values = JSON.parse(req.params.values);
+  const location = values.location;
+  const radius = math.min(values.radius * 1609, 40000);
+  const priceArray = [];
+  if (values.cheap) priceArray.push("1");
+  if (values.average) priceArray.push("2");
+  if (values.nice) priceArray.push("3");
+  if (values.fancy) priceArray.push("4");
+  const price = priceArray.toString();
+  const latitude = values.latitude;
+  const longitude = values.longitude;
+  const categories = values.categories.toString();
+
+  if (location) {
+    client
+      .search({
+        location: location,
+        radius: radius,
+        price: price,
+        categories: categories,
+        limit: 10,
+        open_now: true
+      })
+      .then(response => {
+        const restaurants = response.jsonBody.businesses.map(
+          business => business.name
+        );
+        return res.json({ data: restaurants });
+      })
+      .catch(err => console.log(err));
+  } else {
+    client
+      .search({
+        latitude: latitude,
+        longitude: longitude,
+        radius: radius,
+        price: price,
+        categories: categories,
+        limit: 10,
+        open_now: true
+      })
+      .then(response => {
+        const restaurants = response.jsonBody.businesses.map(
+          business => business.name
+        );
+        return res.json({ data: restaurants });
+      })
+      .catch(err => console.log(err));
+  }
 });
 
 const path = require("path");
