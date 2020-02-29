@@ -1,11 +1,21 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const math = require("mathjs");
+const yelp = require("yelp-fusion");
 const displayCategories = require("./categories/displayCategories");
 const searchCategories = require("./categories/searchCategories");
 
 // Create the server
 const app = express();
+
+// Create the Yelp client
+const client = yelp.client(process.env.YELP_API_KEY, {
+  method: "GET",
+  headers: {
+    Authorization: "Bearer ".concat(process.env.YELP_API_KEY)
+  }
+});
 
 // Sets up category picking
 const numCategories = displayCategories.length;
@@ -18,6 +28,7 @@ let chosenCategoryIndices = [0, 1, 2, 3, 4];
 // Choose new category indices randomly
 app.get("/randomize", cors(), async (req, res, next) => {
   chosenCategoryIndices = math.pickRandom(categoryIndices, 5);
+  console.log(process.env);
   res.sendStatus(200);
 });
 
@@ -39,7 +50,17 @@ app.get("/getSearchCategories", cors(), async (req, res, next) => {
 
 // Return the restaurants found given the form values
 app.get("/searchRestaurants/:values", cors(), async (req, res, next) => {
-  console.log(req.params.values);
+  client
+    .search({
+      term: "Four Barrel Coffee",
+      location: "san francisco, ca"
+    })
+    .then(response => {
+      console.log(response.jsonBody.businesses[0].name);
+    })
+    .catch(e => {
+      console.log(e);
+    });
   res.sendStatus(200);
 });
 
