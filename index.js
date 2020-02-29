@@ -28,7 +28,6 @@ let chosenCategoryIndices = [0, 1, 2, 3, 4];
 // Choose new category indices randomly
 app.get("/randomize", cors(), async (req, res, next) => {
   chosenCategoryIndices = math.pickRandom(categoryIndices, 5);
-  console.log(process.env);
   res.sendStatus(200);
 });
 
