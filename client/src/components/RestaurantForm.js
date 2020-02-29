@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Button } from "@material-ui/core";
 import { CategoriesButton } from "./CategoriesButton";
@@ -31,10 +31,10 @@ const RestaurantForm = props => {
         initialValues={{
           location: "",
 
-          radius: 1,
+          radius: 5,
 
-          cheap: false,
-          average: false,
+          cheap: true,
+          average: true,
           nice: false,
           fancy: false
         }}
@@ -52,13 +52,22 @@ const RestaurantForm = props => {
                   )
               })
         }
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={async (values, { setSubmitting }) => {
           if (values.location === "") {
             delete values.location;
             values["latitude"] = latitude;
             values["longitude"] = longitude;
           }
-          alert(JSON.stringify(values, null, 2));
+          const searchCategoriesResponse = await fetch("/getSearchCategories");
+          await searchCategoriesResponse.json().then(value => {
+            values["categories"] = value.data;
+          });
+          const searchRestaurantsResponse = await fetch(
+            `/searchRestaurants/${JSON.stringify(values)}`
+          );
+          await searchRestaurantsResponse.json().then(value => {
+            console.log(value);
+          });
           setSubmitting(false);
         }}
       >
@@ -108,7 +117,6 @@ const RestaurantForm = props => {
               </label>
             </div>
 
-            <br />
             <br />
             <br />
 

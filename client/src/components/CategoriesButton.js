@@ -5,14 +5,11 @@ const CategoriesButton = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    // Needs to be a separate function so we can use async in useEffect
     async function fetchInit() {
-      const displayCategoriesResponse = await fetch(
-      "/getDisplayCategories"
-    );
-    displayCategoriesResponse
-      .json()
-      .then(value => setCategories(value.data));
-    };
+      const displayCategoriesResponse = await fetch("/getDisplayCategories");
+      displayCategoriesResponse.json().then(value => setCategories(value.data));
+    }
     fetchInit();
   });
 

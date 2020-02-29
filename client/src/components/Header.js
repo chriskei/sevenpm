@@ -17,7 +17,7 @@ const secondaryHeaderStyles = {
   color: "yellow",
   fontStyle: "italic",
   textShadow: "4px 4px #000000"
-}
+};
 
 const Header = () => {
   return (
@@ -25,9 +25,8 @@ const Header = () => {
       <Typography style={HeaderStyles}>7PM</Typography>
       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
       <Typography style={secondaryHeaderStyles}>
-        Please enter some information about what you want to eat! Each field is
-        optional but what you choose to enter will help in matching you to a
-        restaurant!
+        It's 7 pm, do you know where your dinner is?
+        <br /> Guess not - let's fix that for you!
       </Typography>
     </Toolbar>
   );

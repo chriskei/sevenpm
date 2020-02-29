@@ -23,41 +23,25 @@ app.get("/randomize", cors(), async (req, res, next) => {
 
 // Return chosen category indices for display
 app.get("/getDisplayCategories", cors(), async (req, res, next) => {
-  const chosenDisplayCategories = chosenCategoryIndices.map(index =>
-    displayCategories[index]
+  const chosenDisplayCategories = chosenCategoryIndices.map(
+    index => displayCategories[index]
   );
   res.json({ data: chosenDisplayCategories });
 });
 
 // Return chosen category indices for search
 app.get("/getSearchCategories", cors(), async (req, res, next) => {
-  const chosenSearchCategories = chosenCategoryIndices.map(index =>
-    searchCategories[index]
+  const chosenSearchCategories = chosenCategoryIndices.map(
+    index => searchCategories[index]
   );
   res.json({ data: chosenSearchCategories });
 });
 
-/*
-// Serve our api route /cow that returns a custom talking text cow
-app.get("/api/cow/:say", cors(), async (req, res, next) => {
-  try {
-    const text = req.params.say;
-    const moo = cowsay.say({ text });
-    res.json({ moo });
-  } catch (err) {
-    next(err);
-  }
+// Return the restaurants found given the form values
+app.get("/searchRestaurants/:values", cors(), async (req, res, next) => {
+  console.log(req.params.values);
+  res.sendStatus(200);
 });
-// Serve our base route that returns a Hello World cow
-app.get("/api/cow/", cors(), async (req, res, next) => {
-  try {
-    const moo = cowsay.say({ text: "Hello World!" });
-    res.json({ moo });
-  } catch (err) {
-    next(err);
-  }
-});
-*/
 
 const path = require("path");
 // Serve static files from the React frontend app
@@ -69,6 +53,4 @@ app.get("*", (req, res) => {
 
 // Choose the port and start the server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Mixing it up on port ${PORT}`);
-});
+app.listen(PORT, () => {});
