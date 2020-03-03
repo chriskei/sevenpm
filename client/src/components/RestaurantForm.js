@@ -24,15 +24,19 @@ const checkboxStyles = {
   height: "15px"
 };
 
+const finalStyles = {
+  color: "yellow"
+};
+
 const RestaurantForm = props => {
   const { latitude, longitude } = props;
   const [restaurants, setRestaurants] = useState([]);
   const [viewport, setViewport] = useState({
-    latitude: 42.3398,
-    longitude: -71.0892,
+    latitude: 37.0902,
+    longitude: -95.7129,
     width: "80vw",
     height: "80vh",
-    zoom: 13
+    zoom: 3
   });
 
   return (
@@ -42,9 +46,7 @@ const RestaurantForm = props => {
         <Formik
           initialValues={{
             location: "",
-
             radius: 5,
-
             cheap: true,
             average: true,
             nice: false,
@@ -93,7 +95,6 @@ const RestaurantForm = props => {
                 <br />
                 <ErrorMessage name="location" />
               </div>
-
               <div>
                 <h1>Radius (miles):</h1>
                 <label for="radius" style={textStyles}>
@@ -110,7 +111,6 @@ const RestaurantForm = props => {
                   25
                 </label>
               </div>
-
               <div>
                 <h1>Price:</h1>
                 <Field type="checkbox" name="cheap" style={checkboxStyles} />
@@ -130,10 +130,8 @@ const RestaurantForm = props => {
                   $$$$
                 </label>
               </div>
-
               <br />
               <br />
-
               <Button
                 type="submit"
                 disabled={isSubmitting}
@@ -142,15 +140,22 @@ const RestaurantForm = props => {
               >
                 FIND MY RESTAURANTS
               </Button>
-
               <br />
               <br />
             </Form>
           )}
         </Formik>
+        {restaurants.length > 0 && <h1 style={finalStyles}>RESTAURANTS:</h1>}
         {restaurants.map(restaurant => (
-          <Chip label={restaurant} />
+          <Chip
+            label={restaurant}
+            style={finalStyles}
+            variant="outlined"
+            onClick={() => alert(3)}
+          />
         ))}
+        <br />
+        <br />
       </Grid>
       <Grid item xs={6}>
         <Box border={1} borderLeft={2} display="flex">
@@ -163,6 +168,7 @@ const RestaurantForm = props => {
             }}
           ></ReactMapGL>
         </Box>
+        <br />
         <br />
       </Grid>
     </Grid>

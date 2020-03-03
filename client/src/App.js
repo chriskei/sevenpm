@@ -12,7 +12,7 @@ const App = () => {
       setLatitude(pos.coords.latitude.toFixed(5));
       setLongitude(pos.coords.longitude.toFixed(5));
     });
-  }, [latitude, longitude]);
+  }, []);
 
   return (
     <Container style={{ backgroundColor: "indigo" }}>
