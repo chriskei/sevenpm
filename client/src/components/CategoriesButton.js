@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button, Chip } from "@material-ui/core";
+import { Box, Button, List, ListItem, ListItemText } from "@material-ui/core";
+
+const listItemStyles = {
+  fontSize: "22px"
+}
 
 const CategoriesButton = () => {
   const [categories, setCategories] = useState([]);
@@ -14,7 +18,7 @@ const CategoriesButton = () => {
   });
 
   return (
-    <div style={{ color: "white" }}>
+    <Box style={{ color: "white" }}>
       <Button
         size="large"
         variant="contained"
@@ -31,10 +35,14 @@ const CategoriesButton = () => {
         RANDOMIZE CATEGORIES
       </Button>
       <h1>Categories:</h1>
-      {categories.map(category => (
-        <Chip label={category} />
-      ))}
-    </div>
+      <List dense={true} disablePadding={true}>
+        {categories.map(category => (
+          <ListItem style={listItemStyles}>
+            {category}
+          </ListItem>
+        ))}
+      </List>
+    </Box>
   );
 };
 

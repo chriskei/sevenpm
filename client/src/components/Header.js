@@ -2,7 +2,7 @@ import React from "react";
 import { Toolbar, Typography } from "@material-ui/core";
 import "../styles/header.css";
 
-const HeaderStyles = {
+const headerStyles = {
   fontSize: "100px",
   fontFamily: "Bungee Outline",
   fontStyle: "italic",
@@ -22,7 +22,7 @@ const secondaryHeaderStyles = {
 const Header = () => {
   return (
     <Toolbar disableGutters={true}>
-      <Typography style={HeaderStyles}>7PM</Typography>
+      <Typography style={headerStyles}>7PM</Typography>
       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
       <Typography style={secondaryHeaderStyles}>
         It's 7 pm, do you know where your dinner is?
