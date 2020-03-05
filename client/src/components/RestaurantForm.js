@@ -3,8 +3,10 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Button, Box, Chip } from "@material-ui/core";
 import { CategoriesButton } from "./CategoriesButton";
 import * as Yup from "yup";
-import ReactMapGL from "react-map-gl";
+import ReactMapGL, { Popup } from "react-map-gl";
 import Grid from "@material-ui/core/Grid";
+import { CityInfo } from './CityInfo';
+import { Pins } from './Pins';
 require("dotenv").config();
 
 const formStyles = {
@@ -28,6 +30,27 @@ const finalStyles = {
   color: "yellow"
 };
 
+const CITIES = [
+  {
+    city: "New York",
+    population: "8,175,133",
+    image:
+      "http://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Gotham.jpg/240px-Above_Gotham.jpg",
+    state: "New York",
+    latitude: 42.3355,
+    longitude: -71.0890
+  },
+  {
+    city: "Los Angeles",
+    population: "3,792,621",
+    image:
+      "http://upload.wikimedia.org/wikipedia/commons/thumb/5/57/LA_Skyline_Mountains2.jpg/240px-LA_Skyline_Mountains2.jpg",
+    state: "California",
+    latitude: 34.0194,
+    longitude: -118.4108
+  }
+];
+
 const RestaurantForm = props => {
   const { latitude, longitude } = props;
   const [restaurants, setRestaurants] = useState([]);
@@ -38,6 +61,24 @@ const RestaurantForm = props => {
     height: "80vh",
     zoom: 3
   });
+  const [popupInfo, setPopupInfo] = useState(null);
+
+  const renderPopup = () => {
+    if (popupInfo) {
+      return (
+        <Popup
+          tipSize={5}
+          anchor="top"
+          longitude={popupInfo.longitude}
+          latitude={popupInfo.latitude}
+          closeOnClick={false}
+          onClose={() => setPopupInfo(null)}
+        >
+          <CityInfo info={popupInfo} />
+        </Popup>
+      );
+    }
+  };
 
   return (
     <Grid container>
@@ -158,7 +199,7 @@ const RestaurantForm = props => {
         <br />
       </Grid>
       <Grid item xs={6}>
-        <Box border={1} borderLeft={2} display="flex">
+        <Box border={2} display="flex">
           <ReactMapGL
             {...viewport}
             mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API_KEY}
@@ -166,7 +207,10 @@ const RestaurantForm = props => {
             onViewportChange={viewport => {
               setViewport(viewport);
             }}
-          ></ReactMapGL>
+          >
+            <Pins data={CITIES} onClick={city => setPopupInfo(city)} />
+            {renderPopup()}
+          </ReactMapGL>
         </Box>
         <br />
         <br />
