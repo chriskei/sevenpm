@@ -26,7 +26,9 @@ const Header = () => {
       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
       <Typography style={secondaryHeaderStyles}>
         It's 7 pm, do you know where your dinner is?
-        <br /> Guess not - let's fix that for you!
+        <br /> Simply enter some details about what you're looking for, press
+        "find my restaurants," and click on the restaurant chips to view them on
+        the map!
       </Typography>
     </Toolbar>
   );

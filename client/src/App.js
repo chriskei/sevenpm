@@ -1,7 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { Container } from "@material-ui/core";
 import { Header } from "./components/Header";
 import { RestaurantForm } from "./components/RestaurantForm";
+
+// Indigo and yellow theme for nighttime
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#4b0082"
+    },
+    secondary: {
+      main: "#ffff00"
+    }
+  }
+});
 
 const App = () => {
   const [latitude, setLatitude] = useState(undefined);
@@ -15,10 +28,12 @@ const App = () => {
   }, []);
 
   return (
-    <Container style={{ backgroundColor: "indigo" }}>
-      <Header />
-      <RestaurantForm latitude={latitude} longitude={longitude} />
-    </Container>
+    <MuiThemeProvider theme={theme}>
+      <Container style={{ backgroundColor: "indigo" }}>
+        <Header />
+        <RestaurantForm latitude={latitude} longitude={longitude} />
+      </Container>
+    </MuiThemeProvider>
   );
 };
 

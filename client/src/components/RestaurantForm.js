@@ -27,7 +27,9 @@ const checkboxStyles = {
 };
 
 const finalStyles = {
-  color: "yellow"
+  color: "yellow",
+  fontWeight: "bold",
+  margin: "3px"
 };
 
 const CITIES = [
@@ -37,8 +39,8 @@ const CITIES = [
     image:
       "http://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Gotham.jpg/240px-Above_Gotham.jpg",
     state: "New York",
-    latitude: 42.3355,
-    longitude: -71.0890
+    latitude: 42.3464,
+    longitude: -71.0877
   },
   {
     city: "Los Angeles",
@@ -55,11 +57,11 @@ const RestaurantForm = props => {
   const { latitude, longitude } = props;
   const [restaurants, setRestaurants] = useState([]);
   const [viewport, setViewport] = useState({
-    latitude: 37.0902,
-    longitude: -95.7129,
+    latitude: 42.3464,
+    longitude: -71.0877,
     width: "80vw",
     height: "80vh",
-    zoom: 3
+    zoom: 15
   });
   const [popupInfo, setPopupInfo] = useState(null);
 
@@ -189,9 +191,10 @@ const RestaurantForm = props => {
         {restaurants.length > 0 && <h1 style={finalStyles}>RESTAURANTS:</h1>}
         {restaurants.map(restaurant => (
           <Chip
-            label={restaurant}
+            label={restaurant.name}
             style={finalStyles}
             variant="outlined"
+            color="secondary"
             onClick={() => alert(3)}
           />
         ))}

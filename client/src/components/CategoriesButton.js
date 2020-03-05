@@ -3,7 +3,7 @@ import { Box, Button, List, ListItem, ListItemText } from "@material-ui/core";
 
 const listItemStyles = {
   fontSize: "22px"
-}
+};
 
 const CategoriesButton = () => {
   const [categories, setCategories] = useState([]);
@@ -36,9 +36,11 @@ const CategoriesButton = () => {
       </Button>
       <h1>Categories:</h1>
       <List dense={true} disablePadding={true}>
-        {categories.map(category => (
-          <ListItem style={listItemStyles}>
-            {category}
+        {categories.map((category, index) => (
+          <ListItem component="ul" style={listItemStyles}>
+            <b>
+              · {category}
+            </b>
           </ListItem>
         ))}
       </List>

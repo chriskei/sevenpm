@@ -91,9 +91,7 @@ app.get("/searchRestaurants/:values", cors(), async (req, res, next) => {
         open_now: true
       })
       .then(response => {
-        const restaurants = response.jsonBody.businesses.map(
-          business => business.name
-        );
+        const restaurants = response.jsonBody.businesses;
         return res.json({ data: restaurants });
       })
       .catch(err => console.log(err));
