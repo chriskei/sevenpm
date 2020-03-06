@@ -5,8 +5,8 @@ import { CategoriesButton } from "./CategoriesButton";
 import * as Yup from "yup";
 import ReactMapGL, { Popup } from "react-map-gl";
 import Grid from "@material-ui/core/Grid";
-import { CityInfo } from './CityInfo';
-import { Pins } from './Pins';
+import { RestaurantInfo } from "./RestaurantInfo";
+import { Pins } from "./Pins";
 require("dotenv").config();
 
 const formStyles = {
@@ -32,27 +32,6 @@ const finalStyles = {
   margin: "3px"
 };
 
-const CITIES = [
-  {
-    city: "New York",
-    population: "8,175,133",
-    image:
-      "http://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Gotham.jpg/240px-Above_Gotham.jpg",
-    state: "New York",
-    latitude: 42.3464,
-    longitude: -71.0877
-  },
-  {
-    city: "Los Angeles",
-    population: "3,792,621",
-    image:
-      "http://upload.wikimedia.org/wikipedia/commons/thumb/5/57/LA_Skyline_Mountains2.jpg/240px-LA_Skyline_Mountains2.jpg",
-    state: "California",
-    latitude: 34.0194,
-    longitude: -118.4108
-  }
-];
-
 const RestaurantForm = props => {
   const { latitude, longitude } = props;
   const [restaurants, setRestaurants] = useState([]);
@@ -69,14 +48,17 @@ const RestaurantForm = props => {
     if (popupInfo) {
       return (
         <Popup
-          tipSize={5}
+          tipSize={10}
           anchor="top"
-          longitude={popupInfo.longitude}
-          latitude={popupInfo.latitude}
+          longitude={popupInfo.coordinates.longitude}
+          latitude={popupInfo.coordinates.latitude}
+          offsetLeft={10}
+          offsetTop={27}
           closeOnClick={false}
           onClose={() => setPopupInfo(null)}
+          style={{ outline: "black" }}
         >
-          <CityInfo info={popupInfo} />
+          <RestaurantInfo info={popupInfo} />
         </Popup>
       );
     }
@@ -195,7 +177,15 @@ const RestaurantForm = props => {
             style={finalStyles}
             variant="outlined"
             color="secondary"
-            onClick={() => alert(3)}
+            onClick={() =>
+              setViewport({
+                latitude: restaurant.coordinates.latitude,
+                longitude: restaurant.coordinates.longitude,
+                width: viewport.width,
+                height: viewport.height,
+                zoom: viewport.zoom
+              })
+            }
           />
         ))}
         <br />
@@ -211,7 +201,10 @@ const RestaurantForm = props => {
               setViewport(viewport);
             }}
           >
-            <Pins data={CITIES} onClick={city => setPopupInfo(city)} />
+            <Pins
+              data={restaurants}
+              onClick={restaurant => setPopupInfo(restaurant)}
+            />
             {renderPopup()}
           </ReactMapGL>
         </Box>
