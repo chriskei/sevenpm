@@ -14,7 +14,7 @@ const styles = {
     color: "white"
   },
   widthStyles: {
-    width: "300px"
+    width: "250px"
   },
   textStyles: {
     fontSize: "x-large"
@@ -69,7 +69,7 @@ const RestaurantForm = props => {
 
   return (
     <Grid container>
-      <Grid item xs={5}>
+      <Grid item xs={4}>
         <CategoriesButton />
         <br />
         <Formik
@@ -201,6 +201,27 @@ const RestaurantForm = props => {
             </Form>
           )}
         </Formik>
+      </Grid>
+      <Grid item xs={8}>
+        <Box border={2} display="flex">
+          <ReactMapGL
+            // Map with markers
+            {...viewport}
+            mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API_KEY}
+            mapStyle="mapbox://styles/chriskei/ck77y4csm0ppw1io7rn6ajz21"
+            onViewportChange={viewport => {
+              setViewport(viewport);
+            }}
+          >
+            <Pins
+              data={restaurants}
+              onClick={restaurant => setPopupInfo(restaurant)}
+            />
+            {renderPopup()}
+          </ReactMapGL>
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
         {restaurants.length > 0 && (
           <Typography variant="h4" style={styles.finalStyles}>
             <b>RESTAURANTS:</b>
@@ -227,27 +248,6 @@ const RestaurantForm = props => {
             }
           />
         ))}
-        <br />
-        <br />
-      </Grid>
-      <Grid item xs={7}>
-        <Box border={2} display="flex">
-          <ReactMapGL
-            // Map with markers
-            {...viewport}
-            mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API_KEY}
-            mapStyle="mapbox://styles/chriskei/ck77y4csm0ppw1io7rn6ajz21"
-            onViewportChange={viewport => {
-              setViewport(viewport);
-            }}
-          >
-            <Pins
-              data={restaurants}
-              onClick={restaurant => setPopupInfo(restaurant)}
-            />
-            {renderPopup()}
-          </ReactMapGL>
-        </Box>
         <br />
         <br />
       </Grid>
