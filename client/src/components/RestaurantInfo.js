@@ -22,7 +22,7 @@ const RestaurantInfo = props => {
   return (
     <Box maxWidth="250px">
       <a target="_new" href={url} style={styles.anchorStyles}>
-        {name}
+        <Typography variant="h6">{name}</Typography>
       </a>
       <Box style={styles.boxStyles}>
         <Typography>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Button, List, ListItem } from "@material-ui/core";
+import { Box, Button, List, ListItem, Typography } from "@material-ui/core";
 
 // Styling
 const styles = {
@@ -40,17 +40,22 @@ const CategoriesButton = () => {
             .then(value => setCategories(value.data));
         }}
       >
-        RANDOMIZE CATEGORIES
+        <Typography>RANDOMIZE CATEGORIES</Typography>
       </Button>
-      <h1>Categories:</h1>
+      <br />
+      <br />
+      <Typography variant="h5">
+        <b>Categories:</b>
+      </Typography>
       <List dense={true} disablePadding={true}>
         {categories.map((category, index) => (
           <ListItem
             key={`list-item-${index}`}
-            component="ul"
             style={styles.listItemStyles}
           >
-            <b>· {category}</b>
+            <Typography variant="h6">
+              · {category}
+            </Typography>
           </ListItem>
         ))}
       </List>

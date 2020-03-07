@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Button, Box, Chip, Grid } from "@material-ui/core";
+import { Button, Box, Chip, Grid, Typography } from "@material-ui/core";
 import { CategoriesButton } from "./CategoriesButton";
 import * as Yup from "yup";
 import ReactMapGL, { Popup, FlyToInterpolator } from "react-map-gl";
@@ -71,6 +71,7 @@ const RestaurantForm = props => {
     <Grid container>
       <Grid item xs={4}>
         <CategoriesButton />
+        <br />
         <Formik
           initialValues={{
             location: "",
@@ -121,18 +122,19 @@ const RestaurantForm = props => {
           {({ isSubmitting }) => (
             // Form
             <Form style={styles.formStyles}>
-              <div>
-                <h1>Location:</h1>
-                <Field
-                  type="text"
-                  name="location"
-                  style={styles.widthStyles}
-                ></Field>
+              <Box>
+                <Typography variant="h5">
+                  <b>Location:</b>
+                </Typography>
+                <Field type="text" name="location" style={styles.widthStyles} />
                 <br />
                 <ErrorMessage name="location" />
-              </div>
-              <div>
-                <h1>Radius (miles):</h1>
+              </Box>
+              <br />
+              <Box>
+                <Typography variant="h5">
+                  <b>Radius (miles):</b>
+                </Typography>
                 <label for="radius" style={styles.textStyles}>
                   1
                 </label>
@@ -146,9 +148,12 @@ const RestaurantForm = props => {
                 <label for="radius" style={styles.textStyles}>
                   25
                 </label>
-              </div>
-              <div>
-                <h1>Price:</h1>
+              </Box>
+              <br />
+              <Box>
+                <Typography variant="h5">
+                  <b>Price:</b>
+                </Typography>
                 <Field
                   type="checkbox"
                   name="cheap"
@@ -181,8 +186,7 @@ const RestaurantForm = props => {
                 <label for="fancy" style={styles.textStyles}>
                   $$$$
                 </label>
-              </div>
-              <br />
+              </Box>
               <br />
               <Button
                 type="submit"
@@ -190,7 +194,7 @@ const RestaurantForm = props => {
                 size="large"
                 variant="contained"
               >
-                FIND MY RESTAURANTS
+                <Typography>FIND MY RESTAURANTS</Typography>
               </Button>
               <br />
               <br />
@@ -198,7 +202,9 @@ const RestaurantForm = props => {
           )}
         </Formik>
         {restaurants.length > 0 && (
-          <h1 style={styles.finalStyles}>RESTAURANTS:</h1>
+          <Typography variant="h4" style={styles.finalStyles}>
+            <b>RESTAURANTS:</b>
+          </Typography>
         )}
         {restaurants.map(restaurant => (
           // Restaurants returned
