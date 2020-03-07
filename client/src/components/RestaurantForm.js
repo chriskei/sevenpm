@@ -14,7 +14,7 @@ const styles = {
     color: "white"
   },
   widthStyles: {
-    width: "250px"
+    width: "300px"
   },
   textStyles: {
     fontSize: "x-large"
@@ -69,7 +69,7 @@ const RestaurantForm = props => {
 
   return (
     <Grid container>
-      <Grid item xs={4}>
+      <Grid item xs={5}>
         <CategoriesButton />
         <br />
         <Formik
@@ -230,7 +230,7 @@ const RestaurantForm = props => {
         <br />
         <br />
       </Grid>
-      <Grid item xs={8}>
+      <Grid item xs={7}>
         <Box border={2} display="flex">
           <ReactMapGL
             // Map with markers
