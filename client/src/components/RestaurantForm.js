@@ -1,49 +1,52 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Button, Box, Chip } from "@material-ui/core";
+import { Button, Box, Chip, Grid } from "@material-ui/core";
 import { CategoriesButton } from "./CategoriesButton";
 import * as Yup from "yup";
-import ReactMapGL, { Popup } from "react-map-gl";
-import Grid from "@material-ui/core/Grid";
+import ReactMapGL, { Popup, FlyToInterpolator } from "react-map-gl";
 import { RestaurantInfo } from "./RestaurantInfo";
 import { Pins } from "./Pins";
 require("dotenv").config();
 
-const formStyles = {
-  color: "white"
+// Styling
+const styles = {
+  formStyles: {
+    color: "white"
+  },
+  widthStyles: {
+    width: "250px"
+  },
+  textStyles: {
+    fontSize: "x-large"
+  },
+  checkBoxStyles: {
+    width: "15px",
+    height: "15px"
+  },
+  finalStyles: {
+    color: "yellow",
+    fontWeight: "bold",
+    margin: "3px"
+  },
+  popupStyles: {
+    outline: "black"
+  }
 };
 
-const widthStyles = {
-  width: "250px"
-};
-
-const textStyles = {
-  fontSize: "x-large"
-};
-
-const checkboxStyles = {
-  width: "15px",
-  height: "15px"
-};
-
-const finalStyles = {
-  color: "yellow",
-  fontWeight: "bold",
-  margin: "3px"
-};
-
+// Includes all of the inputs that the user gives
 const RestaurantForm = props => {
   const { latitude, longitude } = props;
   const [restaurants, setRestaurants] = useState([]);
   const [viewport, setViewport] = useState({
-    latitude: 42.3464,
-    longitude: -71.0877,
+    latitude: 37.0902,
+    longitude: -95.7129,
+    zoom: 3,
     width: "80vw",
-    height: "80vh",
-    zoom: 15
+    height: "80vh"
   });
   const [popupInfo, setPopupInfo] = useState(null);
 
+  // Show pop up
   const renderPopup = () => {
     if (popupInfo) {
       return (
@@ -56,7 +59,7 @@ const RestaurantForm = props => {
           offsetTop={27}
           closeOnClick={false}
           onClose={() => setPopupInfo(null)}
-          style={{ outline: "black" }}
+          style={styles.popupStyles}
         >
           <RestaurantInfo info={popupInfo} />
         </Popup>
@@ -66,7 +69,7 @@ const RestaurantForm = props => {
 
   return (
     <Grid container>
-      <Grid item xs={6}>
+      <Grid item xs={4}>
         <CategoriesButton />
         <Formik
           initialValues={{
@@ -77,6 +80,7 @@ const RestaurantForm = props => {
             nice: false,
             fancy: false
           }}
+          // Make sure that either geolocation is enabled or the user inputs a desired location
           validationSchema={
             !!latitude && !!longitude
               ? Yup.object()
@@ -92,11 +96,13 @@ const RestaurantForm = props => {
                 })
           }
           onSubmit={async (values, { setSubmitting }) => {
+            // Since validation occurs, we can be sure that if location is not filled out, the user has geolocation enabled
             if (values.location === "") {
               delete values.location;
               values["latitude"] = latitude;
               values["longitude"] = longitude;
             }
+            // Get categories from the server and add them to the search
             const searchCategoriesResponse = await fetch(
               "/getSearchCategories"
             );
@@ -113,16 +119,21 @@ const RestaurantForm = props => {
           }}
         >
           {({ isSubmitting }) => (
-            <Form style={formStyles}>
+            // Form
+            <Form style={styles.formStyles}>
               <div>
                 <h1>Location:</h1>
-                <Field type="text" name="location" style={widthStyles}></Field>
+                <Field
+                  type="text"
+                  name="location"
+                  style={styles.widthStyles}
+                ></Field>
                 <br />
                 <ErrorMessage name="location" />
               </div>
               <div>
                 <h1>Radius (miles):</h1>
-                <label for="radius" style={textStyles}>
+                <label for="radius" style={styles.textStyles}>
                   1
                 </label>
                 <Field
@@ -130,28 +141,44 @@ const RestaurantForm = props => {
                   min={1}
                   max={25}
                   name="radius"
-                  style={widthStyles}
+                  style={styles.widthStyles}
                 />
-                <label for="radius" style={textStyles}>
+                <label for="radius" style={styles.textStyles}>
                   25
                 </label>
               </div>
               <div>
                 <h1>Price:</h1>
-                <Field type="checkbox" name="cheap" style={checkboxStyles} />
-                <label for="cheap" style={textStyles}>
+                <Field
+                  type="checkbox"
+                  name="cheap"
+                  style={styles.checkBoxStyles}
+                />
+                <label for="cheap" style={styles.textStyles}>
                   ${"  "}
                 </label>
-                <Field type="checkbox" name="average" style={checkboxStyles} />
-                <label for="average" style={textStyles}>
+                <Field
+                  type="checkbox"
+                  name="average"
+                  style={styles.checkboxStyles}
+                />
+                <label for="average" style={styles.textStyles}>
                   $${"  "}
                 </label>
-                <Field type="checkbox" name="nice" style={checkboxStyles} />
-                <label for="nice" style={textStyles}>
+                <Field
+                  type="checkbox"
+                  name="nice"
+                  style={styles.checkboxStyles}
+                />
+                <label for="nice" style={styles.textStyles}>
                   $$${" "}
                 </label>
-                <Field type="checkbox" name="fancy" style={checkboxStyles} />
-                <label for="fancy" style={textStyles}>
+                <Field
+                  type="checkbox"
+                  name="fancy"
+                  style={styles.checkboxStyles}
+                />
+                <label for="fancy" style={styles.textStyles}>
                   $$$$
                 </label>
               </div>
@@ -170,11 +197,14 @@ const RestaurantForm = props => {
             </Form>
           )}
         </Formik>
-        {restaurants.length > 0 && <h1 style={finalStyles}>RESTAURANTS:</h1>}
+        {restaurants.length > 0 && (
+          <h1 style={styles.finalStyles}>RESTAURANTS:</h1>
+        )}
         {restaurants.map(restaurant => (
+          // Restaurants returned
           <Chip
             label={restaurant.name}
-            style={finalStyles}
+            style={styles.finalStyles}
             variant="outlined"
             color="secondary"
             onClick={() =>
@@ -183,7 +213,10 @@ const RestaurantForm = props => {
                 longitude: restaurant.coordinates.longitude,
                 width: viewport.width,
                 height: viewport.height,
-                zoom: viewport.zoom
+                zoom: 15,
+                // Smooth transition to restaurant on map
+                transitionInterpolator: new FlyToInterpolator({ speed: 1 }),
+                transitionDuration: "auto"
               })
             }
           />
@@ -191,9 +224,10 @@ const RestaurantForm = props => {
         <br />
         <br />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={8}>
         <Box border={2} display="flex">
           <ReactMapGL
+            // Map with markers
             {...viewport}
             mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API_KEY}
             mapStyle="mapbox://styles/chriskei/ck77y4csm0ppw1io7rn6ajz21"

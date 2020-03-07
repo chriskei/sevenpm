@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { Container } from "@material-ui/core";
+import { Container, MuiThemeProvider, createMuiTheme} from "@material-ui/core";
 import { Header } from "./components/Header";
 import { RestaurantForm } from "./components/RestaurantForm";
 
-// Indigo and yellow theme for nighttime
+// Indigo and yellow colors for nighttime
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -16,10 +15,19 @@ const theme = createMuiTheme({
   }
 });
 
+// Styling
+const styles = {
+  app: {
+    backgroundColor: "indigo"
+  }
+};
+
+// Overall app
 const App = () => {
   const [latitude, setLatitude] = useState(undefined);
   const [longitude, setLongitude] = useState(undefined);
 
+  // Allow the user to accept geolocation usage to use their current location for searching
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(pos => {
       setLatitude(pos.coords.latitude.toFixed(5));
@@ -29,7 +37,7 @@ const App = () => {
 
   return (
     <MuiThemeProvider theme={theme}>
-      <Container style={{ backgroundColor: "indigo" }}>
+      <Container style={styles.app}>
         <Header />
         <RestaurantForm latitude={latitude} longitude={longitude} />
       </Container>

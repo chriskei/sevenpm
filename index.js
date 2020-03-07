@@ -62,6 +62,7 @@ app.get("/searchRestaurants/:values", cors(), async (req, res, next) => {
   const longitude = values.longitude;
   const categories = values.categories.toString();
 
+  // Uses location
   if (location) {
     client
       .search({
@@ -77,7 +78,9 @@ app.get("/searchRestaurants/:values", cors(), async (req, res, next) => {
         return res.json({ data: restaurants });
       })
       .catch(err => console.log(err));
-  } else {
+  }
+  // Uses latitude and longitude via geolocation
+  else {
     client
       .search({
         latitude: latitude,

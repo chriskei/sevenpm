@@ -1,11 +1,14 @@
 import React from "react";
 import { Marker } from "react-map-gl";
 
+// Custom map pointer SVG
 const ICON = `M14,20L14,20L20,30L25,20L25.4,19A6.4,7,180,1,0,13.5,19L13.6,19L14,20z`;
 
+// Pointers on map
 const Pins = props => {
   const { data, onClick } = props;
 
+  // Ensure there are some restaurants to create pointers for
   if (data.length > 0) {
     return data.map(restaurant => {
       const { id, coordinates } = restaurant;
@@ -34,6 +37,7 @@ const Pins = props => {
     });
   }
 
+  // When there are no restaurants to create pointers for
   return null;
 };
 

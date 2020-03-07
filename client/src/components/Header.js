@@ -1,34 +1,38 @@
 import React from "react";
 import { Toolbar, Typography } from "@material-ui/core";
-import "../styles/header.css";
+import "../fonts.css";
 
-const headerStyles = {
-  fontSize: "100px",
-  fontFamily: "Bungee Outline",
-  fontStyle: "italic",
-  fontWeight: "bold",
-  color: "yellow",
-  textShadow: "4px 4px #000000"
+// Styling
+const styles = {
+  headerStyles: {
+    fontSize: "100px",
+    fontFamily: "Bungee Outline",
+    fontStyle: "italic",
+    fontWeight: "bold",
+    color: "yellow",
+    textShadow: "4px 4px #000000"
+  },
+  secondaryHeaderStyles: {
+    fontSize: "15px",
+    fontFamily: "Bungee Hairline",
+    fontWeight: "bold",
+    color: "yellow",
+    fontStyle: "italic"
+  }
 };
 
-const secondaryHeaderStyles = {
-  fontSize: "19px",
-  fontFamily: "Bungee",
-  color: "yellow",
-  fontStyle: "italic",
-  textShadow: "4px 4px #000000"
-};
-
+// Header containing website title and description
 const Header = () => {
   return (
     <Toolbar disableGutters={true}>
-      <Typography style={headerStyles}>7PM</Typography>
+      <Typography style={styles.headerStyles}>7PM</Typography>
       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-      <Typography style={secondaryHeaderStyles}>
-        It's 7 pm, do you know where your dinner is?
-        <br /> Simply enter some details about what you're looking for, press
-        "find my restaurants," and click on the restaurant chips to view them on
-        the map!
+      <Typography style={styles.secondaryHeaderStyles}>
+        Find your next dinner in a few easy steps: 1. Randomize until you find
+        some interesting categories; 2. Enter location (or enable geolocation),
+        radius, and price points; 3. Press find my restaurants; 4. Use the
+        restaurant chips to fly to restaurants on the map; 5. Click on map
+        markers to get more restaurant details!
       </Typography>
     </Toolbar>
   );

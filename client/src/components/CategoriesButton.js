@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, List, ListItem } from "@material-ui/core";
 
-const listItemStyles = {
-  fontSize: "22px"
+// Styling
+const styles = {
+  boxStyles: {
+    color: "white"
+  },
+  listItemStyles: {
+    fontSize: "22px"
+  }
 };
 
+// Randomizes categories and displays those categories
 const CategoriesButton = () => {
   const [categories, setCategories] = useState([]);
 
+  // Get initial 5 categories
   useEffect(() => {
     // Needs to be a separate function so we can use async in useEffect
     async function fetchInit() {
@@ -18,7 +26,7 @@ const CategoriesButton = () => {
   });
 
   return (
-    <Box style={{ color: "white" }}>
+    <Box style={styles.boxStyles}>
       <Button
         size="large"
         variant="contained"
@@ -40,7 +48,7 @@ const CategoriesButton = () => {
           <ListItem
             key={`list-item-${index}`}
             component="ul"
-            style={listItemStyles}
+            style={styles.listItemStyles}
           >
             <b>· {category}</b>
           </ListItem>
