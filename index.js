@@ -57,10 +57,15 @@ app.get("/searchRestaurants/:values", cors(), async (req, res, next) => {
   if (values.average) priceArray.push("2");
   if (values.nice) priceArray.push("3");
   if (values.fancy) priceArray.push("4");
-  const price = priceArray.toString();
+  let price = priceArray.toString();
   const latitude = values.latitude;
   const longitude = values.longitude;
   const categories = values.categories.toString();
+
+  // If user doesn't put any specific price points, allow all of them
+  if (price === "") {
+    price = "1,2,3,4";
+  }
 
   // Uses location
   if (location) {

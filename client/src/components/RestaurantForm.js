@@ -19,10 +19,6 @@ const styles = {
   textStyles: {
     fontSize: "x-large"
   },
-  checkBoxStyles: {
-    width: "15px",
-    height: "15px"
-  },
   finalStyles: {
     color: "yellow",
     fontWeight: "bold",
@@ -75,9 +71,9 @@ const RestaurantForm = props => {
         <Formik
           initialValues={{
             location: "",
-            radius: 5,
-            cheap: true,
-            average: true,
+            radius: 1,
+            cheap: false,
+            average: false,
             nice: false,
             fancy: false
           }}
@@ -150,42 +146,18 @@ const RestaurantForm = props => {
                 </label>
               </Box>
               <br />
-              <Box>
+              <Box style={styles.textStyles}>
                 <Typography variant="h5">
                   <b>Price:</b>
                 </Typography>
-                <Field
-                  type="checkbox"
-                  name="cheap"
-                  style={styles.checkBoxStyles}
-                />
-                <label for="cheap" style={styles.textStyles}>
-                  ${"  "}
-                </label>
-                <Field
-                  type="checkbox"
-                  name="average"
-                  style={styles.checkboxStyles}
-                />
-                <label for="average" style={styles.textStyles}>
-                  $${"  "}
-                </label>
-                <Field
-                  type="checkbox"
-                  name="nice"
-                  style={styles.checkboxStyles}
-                />
-                <label for="nice" style={styles.textStyles}>
-                  $$${" "}
-                </label>
-                <Field
-                  type="checkbox"
-                  name="fancy"
-                  style={styles.checkboxStyles}
-                />
-                <label for="fancy" style={styles.textStyles}>
-                  $$$$
-                </label>
+                <Field type="checkbox" name="cheap" />
+                <label for="cheap">${"  "}</label>
+                <Field type="checkbox" name="average" />
+                <label for="average">$${"  "}</label>
+                <Field type="checkbox" name="nice" />
+                <label for="nice">$$$ </label>
+                <Field type="checkbox" name="fancy" />
+                <label for="fancy">$$$$</label>
               </Box>
               <br />
               <Button
